@@ -24,7 +24,7 @@ def main():
         master_clean_records
     )
 
-    # Trigger business calculations inline
+    # Trigger business calculations inline test record
     calculate_dynamic_loyalty_matrix_rewards(master_clean_records)
     # ==============================================================================
     # COMPILATION REVERB ACCUMULATION REPORT & FILE IO DIRECT DUMPING
