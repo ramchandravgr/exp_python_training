@@ -1,0 +1,12 @@
+{'id': 101, 'name': 'Alice Smith', 'email': 'alice@gmail.com', 'tier': 'Gold', 'region': 'North', 'lifetime_value': 633.36, 'status': 'PROCESSED_UPDATED'}
+{'id': 102, 'name': 'Bob Jones', 'email': 'bob@yahoo.com', 'tier': 'Silver', 'region': 'South', 'lifetime_value': 275.5, 'status': 'PROCESSED_UPDATED'}
+{'id': 103, 'name': 'Charlie Stark', 'email': 'c.stark@outlook.com', 'tier': 'Gold', 'region': 'East', 'lifetime_value': 523.21, 'status': 'PROCESSED_UPDATED'}
+{'id': 104, 'name': 'Diana Prince', 'email': 'diana@amazon.com', 'tier': 'Gold', 'region': 'West', 'lifetime_value': 578.29, 'status': 'PROCESSED_UPDATED'}
+{'id': 105, 'name': 'Evan Wright', 'email': 'evan@corp.com', 'tier': 'Bronze', 'region': 'North', 'lifetime_value': 143.75, 'status': 'PROCESSED_UPDATED'}
+{'id': 106, 'name': 'Fiona Gallagher', 'email': 'fiona@southside.net', 'tier': 'Silver', 'region': 'South', 'lifetime_value': 275.5, 'status': 'PROCESSED_UPDATED'}
+{'id': 107, 'name': 'George Clark', 'email': 'george@clark.io', 'tier': 'Silver', 'region': 'West', 'lifetime_value': 289.28, 'status': 'PROCESSED_NEW'}
+{'id': 108, 'name': 'Hannah Abbott', 'email': 'hannah@hogwarts.edu', 'tier': 'Gold', 'region': 'North', 'lifetime_value': 633.36, 'status': 'PROCESSED_NEW'}
+{'id': 109, 'name': 'Ian Malcolm', 'email': 'chaos@jurassic.org', 'tier': 'Gold', 'region': 'West', 'lifetime_value': 578.29, 'status': 'PROCESSED_NEW'}
+{'id': 110, 'name': 'Julia Roberts', 'email': 'julia@hollywood.com', 'tier': 'Silver', 'region': 'East', 'lifetime_value': 261.72, 'status': 'PROCESSED_NEW'}
+{'id': 111, 'name': 'Kevin Bacon', 'email': 'kevin@sixdegrees.com', 'tier': 'Bronze', 'region': 'South', 'lifetime_value': 125.0, 'status': 'PROCESSED_NEW'}
+{'id': 112, 'name': 'Laura Croft', 'email': 'tomb@raider.co.uk', 'tier': 'Gold', 'region': 'North', 'lifetime_value': 633.36, 'status': 'PROCESSED_NEW'}
