@@ -11,4 +11,6 @@ dependencies = [
 [tool.uv.workspace]
 members = [
     "Session2",
+    "Lab_0907",
+    "Lab1407",
 ]
