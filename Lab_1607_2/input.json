@@ -1,0 +1,21 @@
+{
+    "report_generated_by": "  SYSTEM_ADMIN_USER  ",
+    "status": " SUCCESS_COMPLETED ",
+    "results": [
+        {
+            "raw_name": "  alice   smith  ",
+            "credit_score": 742,
+            "audit_notes": "Approved under profile reference: EXP-88194-A. Verification completed on 2026-07-10."
+        },
+        {
+            "raw_name": "BOB   JONES  ",
+            "credit_score": 612,
+            "audit_notes": "Referral triggered. Flagged profile is EXP-33091-B. Manual review required."
+        },
+        {
+            "raw_name": "  charlie brown ",
+            "credit_score": 810,
+            "audit_notes": "Excellent history found in system file EXP-11024-C."
+        }
+    ]
+}

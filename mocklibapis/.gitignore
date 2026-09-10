@@ -1,0 +1,4 @@
+.env
+data/books_pages/
+data/books_manifest.json
+data/libraries_large.json

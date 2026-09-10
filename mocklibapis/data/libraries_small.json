@@ -1,0 +1,162 @@
+{
+  "90210": [
+    {
+      "library_id": 1,
+      "place": "Beverly Hills Public Library",
+      "address": "444 N Rexford Dr, Beverly Hills, CA 90210",
+      "contact": "+1-310-288-2211",
+      "books": [
+        {
+          "book_id": 101,
+          "name": "The Great Gatsby",
+          "author": "F. Scott Fitzgerald",
+          "date_of_publish": "1925-04-10",
+          "available": true,
+          "demand": "HIGH"
+        },
+        {
+          "book_id": 102,
+          "name": "To Kill a Mockingbird",
+          "author": "Harper Lee",
+          "date_of_publish": "1960-07-11",
+          "available": false,
+          "demand": "MEDIUM"
+        },
+        {
+          "book_id": 103,
+          "name": "1984",
+          "author": "George Orwell",
+          "date_of_publish": "1949-06-08",
+          "available": true,
+          "demand": "HIGH"
+        }
+      ]
+    },
+    {
+      "library_id": 2,
+      "place": "Rodeo Drive Reading Room",
+      "address": "9560 Dayton Way, Beverly Hills, CA 90210",
+      "contact": "+1-310-271-9900",
+      "books": [
+        {
+          "book_id": 201,
+          "name": "Pride and Prejudice",
+          "author": "Jane Austen",
+          "date_of_publish": "1813-01-28",
+          "available": true,
+          "demand": "LOW"
+        },
+        {
+          "book_id": 202,
+          "name": "The Hobbit",
+          "author": "J.R.R. Tolkien",
+          "date_of_publish": "1937-09-21",
+          "available": true,
+          "demand": "MEDIUM"
+        }
+      ]
+    }
+  ],
+  "10001": [
+    {
+      "library_id": 3,
+      "place": "Midtown Manhattan Library",
+      "address": "455 Fifth Ave, New York, NY 10001",
+      "contact": "+1-212-340-0906",
+      "books": [
+        {
+          "book_id": 301,
+          "name": "The Catcher in the Rye",
+          "author": "J.D. Salinger",
+          "date_of_publish": "1951-07-16",
+          "available": true,
+          "demand": "HIGH"
+        },
+        {
+          "book_id": 302,
+          "name": "Beloved",
+          "author": "Toni Morrison",
+          "date_of_publish": "1987-09-02",
+          "available": false,
+          "demand": "MEDIUM"
+        },
+        {
+          "book_id": 301,
+          "name": "The Catcher in the Rye",
+          "author": "J.D. Salinger",
+          "date_of_publish": "1951-07-16",
+          "available": true,
+          "demand": "HIGH"
+        },
+        {
+          "book_id": 303,
+          "name": "Invisible Man",
+          "author": "Ralph Ellison",
+          "date_of_publish": "1952-04-14",
+          "available": true,
+          "demand": "LOW"
+        },
+        {
+          "book_id": 301,
+          "name": "The Catcher in the Rye",
+          "author": "J.D. Salinger",
+          "date_of_publish": "1951-07-16",
+          "available": true,
+          "demand": "HIGH"
+        }
+      ]
+    }
+  ],
+  "60601": [
+    {
+      "library_id": 4,
+      "place": "Chicago Loop Library",
+      "address": "400 S State St, Chicago, IL 60601",
+      "contact": "+1-312-747-4300",
+      "books": [
+        {
+          "book_id": 401,
+          "name": "The Adventures of Huckleberry Finn",
+          "author": "Mark Twain",
+          "date_of_publish": "1884-12-10",
+          "available": true,
+          "demand": "LOW"
+        },
+        {
+          "book_id": 402,
+          "name": "Native Son",
+          "author": "Richard Wright",
+          "date_of_publish": "1940-03-01",
+          "available": true,
+          "demand": "MEDIUM"
+        }
+      ]
+    }
+  ],
+  "33101": [
+    {
+      "library_id": 5,
+      "place": "Downtown Miami Library",
+      "address": "101 W Flagler St, Miami, FL 33101",
+      "contact": "+1-305-375-2665",
+      "books": [
+        {
+          "book_id": 501,
+          "name": "Their Eyes Were Watching God",
+          "author": "Zora Neale Hurston",
+          "date_of_publish": "1937-09-18",
+          "available": false,
+          "demand": "HIGH"
+        },
+        {
+          "book_id": 502,
+          "name": "The Old Man and the Sea",
+          "author": "Ernest Hemingway",
+          "date_of_publish": "1952-09-01",
+          "available": true,
+          "demand": "MEDIUM"
+        }
+      ]
+    }
+  ]
+}

@@ -5,7 +5,9 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "openpyxl>=3.1.5",
     "python-dotenv>=1.2.2",
+    "requests>=2.34.2",
 ]
 
 [tool.uv.workspace]
@@ -13,4 +15,11 @@ members = [
     "Session2",
     "Lab_0907",
     "Lab1407",
+    "Lab_1607",
+    "Lab_1607_2",
+    "Lab_0608",
+    "Lab_1108",
+    "Lab_1308",
+    "Lab_1808",
+    "lab_wpl_0809",
 ]

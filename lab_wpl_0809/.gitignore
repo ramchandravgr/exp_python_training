@@ -1,0 +1,11 @@
+# Virtual environments
+.env
+.venv
+
+# Cache files
+.pytest_cache/
+.ruff_cache/
+
+# Logs
+*.log
+/reports
