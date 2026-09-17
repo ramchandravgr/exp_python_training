@@ -16,10 +16,13 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 # load settings from .env file
 load_dotenv()
 log_level = os.getenv("LOG_LEVEL", "INFO")
-alert_threshold = 30
+alert_threshold = float(os.getenv("ALERT_THRESHOLD_C", "30"))
+
+# project root (lab_wpl_0809/) — monkeypatchable in tests
+PROJECT_ROOT = Path(__file__).parent.parent
 
 # set up logging to write to pipeline.log
-log_file = Path(__file__).parent.parent / "pipeline.log"
+log_file = PROJECT_ROOT / "pipeline.log"
 logging.basicConfig(
     filename=log_file,
     level=log_level,
@@ -27,10 +30,87 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+OPEN_METEO_URL = "https://api.open-meteo.com/v1/forecast"
+
+
+def clean_city_name(raw_name: str) -> str:
+    """Normalize a messy city name: strip junk chars, whitespace, title-case."""
+    name = re.sub(r"[^a-zA-Z\s]", "", raw_name)
+    name = name.strip()
+    name = re.sub(r"\s+", " ", name)
+    return name.title()
+
+
+def load_and_clean_cities(csv_file: Path) -> list[dict]:
+    """Read the cities CSV and return cleaned city/lat/lon records."""
+    rows = []
+    with open(csv_file, mode="r", encoding="utf-8") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            try:
+                name = clean_city_name(row["city"])
+                lat = float(row["latitude"])
+                lon = float(row["longitude"])
+                rows.append({
+                    "city": name,
+                    "latitude": lat,
+                    "longitude": lon,
+                })
+                logger.info("Cleaned row: %s -> %s", row["city"], name)
+            except Exception as e:
+                logger.error("Skipping bad row %s: %s", row, e)
+    return rows
+
+
+def fetch_weather(city: str, latitude: float, longitude: float) -> dict | None:
+    """Fetch hourly weather for one city from Open-Meteo. Returns None on failure."""
+    params = {
+        "hourly": "temperature_2m,precipitation",
+        "timezone": "auto",
+        "latitude": latitude,
+        "longitude": longitude,
+    }
+    try:
+        response = requests.get(url=OPEN_METEO_URL, params=params, verify=False)
+        response.raise_for_status()
+    except Exception as e:
+        logger.error("API call failed for %s: %s", city, e)
+        return None
+
+    data = response.json()
+    hourly = data.get("hourly", {})
+    times = hourly.get("time", [])
+    temperature = hourly.get("temperature_2m", [])
+    precipitation = hourly.get("precipitation", [])
+
+    if not times:
+        logger.info("Hourly data not seen for %s", city)
+        return None
+
+    if not (len(times) == len(temperature) == len(precipitation)):
+        logger.error("Hourly data not present for all parameters for %s", city)
+        return None
+
+    fixed_precipitation = []
+    for j in range(len(times)):
+        if j < len(precipitation) and precipitation[j] is not None:
+            fixed_precipitation.append(precipitation[j])
+        else:
+            fixed_precipitation.append(0)
+
+    return {
+        "city": city,
+        "data": {
+            "time": times,
+            "temperature_2m": temperature,
+            "precipitation": fixed_precipitation,
+        },
+    }
+
 
 def write_reports(merged_df):
     # make the reports folder if it does not exist
-    reports_dir = Path(__file__).parent.parent / "reports"
+    reports_dir = PROJECT_ROOT / "reports"
     reports_dir.mkdir(exist_ok=True)
 
     # save full report to excel
@@ -38,7 +118,7 @@ def write_reports(merged_df):
     merged_df.to_excel(excel_path, index=False, sheet_name="Daily Weather")
     logger.info("Saved excel report to %s", excel_path)
 
-    # find cities hotter than 30 degrees
+    # find cities hotter than the alert threshold
     alert_list = []
     for i in range(len(merged_df)):
         row = merged_df.iloc[i]
@@ -60,87 +140,29 @@ def write_reports(merged_df):
 
 
 def run_pipeline():
-    csv_file = Path(__file__).parent.parent / "data" / "raw_cities.csv"
+    csv_file = PROJECT_ROOT / "data" / "raw_cities.csv"
 
     logger.info("Starting to parse CSV file: %s", csv_file)
-    rows = []
 
     try:
-        with open(csv_file, mode="r", encoding="utf-8") as file:
-            reader = csv.DictReader(file)
-            for row in reader:
-                try:
-                    # remove special characters like ! and *
-                    name = re.sub(r"[^a-zA-Z\s]", "", row["city"])
-                    # remove extra spaces at start/end
-                    name = name.strip()
-                    # replace multiple spaces with single space
-                    name = re.sub(r"\s+", " ", name)
-                    # make it title case, e.g. "new york" -> "New York"
-                    name = name.title()
-
-                    lat = float(row["latitude"])
-                    lon = float(row["longitude"])
-
-                    rows.append({
-                        "city": name,
-                        "latitude": lat,
-                        "longitude": lon,
-                    })
-                    logger.info("Cleaned row: %s -> %s", row["city"], name)
-                except Exception as e:
-                    logger.error("Skipping bad row %s: %s", row, e)
+        rows = load_and_clean_cities(csv_file)
     except FileNotFoundError as e:
         logger.error("Could not find CSV file: %s", e)
         return
 
     logger.info("Finished parsing CSV file. Total rows: %d", len(rows))
 
-    url = "https://api.open-meteo.com/v1/forecast"
     weather_data = []
     start_time = time.time()
 
     for row in rows:
-        params = {
-            "hourly": "temperature_2m,precipitation",
-            "timezone": "auto",
-            "latitude": row["latitude"],
-            "longitude": row["longitude"],
-        }
-
-        try:
-            response = requests.get(url=url, params=params, verify=False)
-            response.raise_for_status()
-        except Exception as e:
-            logger.error("API call failed for %s: %s", row["city"], e)
+        result = fetch_weather(row["city"], row["latitude"], row["longitude"])
+        if result is None:
             continue
 
-        data = response.json()
-        hourly = data.get("hourly", {})
-        times = hourly.get("time", [])
-        temperature = hourly.get("temperature_2m", [])
-        precipitation = hourly.get("precipitation", [])
-
-        if not times:
-            logger.info("Hourly data not seen for %s", row["city"])
-            continue
-
-        if not (len(times) == len(temperature) == len(precipitation)):
-            logger.error("Hourly data not present for all parameters for %s", row["city"])
-            continue
-
-        # fix missing precipitation values before making the dataframe
-        fixed_precipitation = []
-        for j in range(len(times)):
-            if j < len(precipitation) and precipitation[j] is not None:
-                fixed_precipitation.append(precipitation[j])
-            else:
-                fixed_precipitation.append(0)
-
-        hourly["precipitation"] = fixed_precipitation
-
+        hourly = result["data"]
         city_df = pd.DataFrame(hourly)
-        city_df["city"] = row["city"]
+        city_df["city"] = result["city"]
         weather_data.append(city_df)
         logger.info("Fetched %d hourly rows for %s", len(city_df), row["city"])
 
