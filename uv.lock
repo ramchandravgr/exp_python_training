@@ -19,6 +19,7 @@ members = [
     "lab-1607",
     "lab-1607-2",
     "lab-1808",
+    "lab-banking-2209",
     "lab-wpl-0809",
     "lab1407",
     "module1",
@@ -275,6 +276,23 @@ dependencies = [
 requires-dist = [{ name = "httpx", specifier = ">=0.28.0" }]
 
 [[package]]
+name = "lab-banking-2209"
+version = "0.1.0"
+source = { virtual = "lab_banking_2209" }
+dependencies = [
+    { name = "logging" },
+    { name = "pytest" },
+    { name = "ruff" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "logging", specifier = ">=0.4.9.6" },
+    { name = "pytest", specifier = ">=9.1.1" },
+    { name = "ruff", specifier = ">=0.16.6" },
+]
+
+[[package]]
 name = "lab-wpl-0809"
 version = "0.1.0"
 source = { virtual = "lab_wpl_0809" }
@@ -303,6 +321,12 @@ requires-dist = [
 name = "lab1407"
 version = "0.1.0"
 source = { virtual = "Lab1407" }
+
+[[package]]
+name = "logging"
+version = "0.4.9.6"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/93/4b/979db9e44be09f71e85c9c8cfc42f258adfb7d93ce01deed2788b2948919/logging-0.4.9.6.tar.gz", hash = "sha256:26f6b50773f085042d301085bd1bf5d9f3735704db9f37c1ce6d8b85c38f2417", size = 96029, upload-time = "2013-06-04T23:43:22.086Z" }
 
 [[package]]
 name = "module1"
